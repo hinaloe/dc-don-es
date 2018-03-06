@@ -1,0 +1,42 @@
+version: '2'
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.1.3
+    environment:
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    networks:
+      - internal
+      - external
+### Uncomment to enable ES persistance
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+  kibana:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
+    environment:
+      ELASTICSEARCH_URL: "http://es:9200"
+    networks:
+#      - internal
+## for development
+      - external
+    mem_limit: 1g
+    memswap_limit: 2g
+    depends_on:
+      - es
+    ports:
+      - "127.0.0.1:3727:5601"
+  nginx:
+    image: nginx
+#    volumes:
+    ports:
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:80:80"
+    networks:
+    - internal
+    - external
+networks:
+  internal:
+    internal: true
+  external:
+    

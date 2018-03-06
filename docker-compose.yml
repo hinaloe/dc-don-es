@@ -17,24 +17,27 @@ services:
     environment:
       ELASTICSEARCH_URL: "http://es:9200"
     networks:
-#      - internal
+      - internal
 ## for development
-      - external
+#      - external
     mem_limit: 1g
     memswap_limit: 2g
     depends_on:
       - es
-    ports:
-      - "127.0.0.1:3727:5601"
+#    ports:
+#      - "127.0.0.1:3727:5601"
   nginx:
     image: nginx
-#    volumes:
+    volumes:
+      - "./conf/nginx:/etc/nginx/conf.d"
+      - ./certs:/etc/certs
     ports:
-      - "127.0.0.1:443:443"
-      - "127.0.0.1:80:80"
+      - "443:443"
+      - "80:80"
+    #  - "127.0.0.1:8080:8080"
     networks:
-    - internal
-    - external
+      - internal
+      - external
 networks:
   internal:
     internal: true

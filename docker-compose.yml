@@ -4,7 +4,7 @@ services:
 #    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
     build: ./build/es
     environment:
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     networks:
       - internal
       - external
@@ -21,7 +21,7 @@ services:
       - internal
 ## for development
 #      - external
-    mem_limit: 1536m
+    mem_limit: 512m
 #    memswap_limit: 2g
     depends_on:
       - es

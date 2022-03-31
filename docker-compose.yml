@@ -16,7 +16,7 @@ services:
     mem_limit: 556m
     memswap_limit: 1g
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:7.0.1
+    image: docker.elastic.co/kibana/kibana:7.17.1
     environment:
       ELASTICSEARCH_URL: "http://es:9200"
     networks:
